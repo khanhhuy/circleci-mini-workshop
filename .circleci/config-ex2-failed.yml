@@ -1,0 +1,28 @@
+version: 2.1
+
+jobs:
+  test-rubocop:
+    working_directory: ~/holistics
+    docker:
+      - image: cimg/ruby:2.7.4
+    steps:
+      - checkout
+      - run:
+          command: bundle install 
+      - run:
+          command: bundle exec rubocop
+  test-rspec:
+    working_directory: ~/holistics
+    docker:
+      - image: cimg/ruby:2.7.4
+    steps:
+      - run:
+          command: bundle exec rspec
+
+workflows:
+  exercise1: 
+    jobs:
+      - test-rubocop
+      - test-rspec:
+          requires:
+            - test-rubocop

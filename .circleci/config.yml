@@ -1,46 +1,24 @@
 version: 2.1
 
-executors:
-  ruby-274:
-    working_directory: ~/holistics
-    docker:
-      - image: cimg/ruby:2.7.4
+setup: true
 
-commands:
-  bundle_install:
-    steps:
-      - restore_cache:
-          key: gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-      - run:
-          command: bundle install 
-      - save_cache:
-          key: gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
+orbs:
+  continuation: circleci/continuation@0.1.2
 
 jobs:
-  test-rubocop:
-    executor: ruby-274
+  setup:
+    docker:
+      - image: cimg/ruby:2.7.4
     steps:
       - checkout
-      - bundle_install
       - run:
-          command: bundle exec rubocop
-  test-rspec:
-    executor: ruby-274
-    steps:
-      - checkout
-      - bundle_install
-      - run:
-          command: bundle exec rspec
-      - store_artifacts:
-          path: coverage
-          destination: coverage
+          name: Generate config
+          command: |
+            ruby .circleci/generate_config.rb
+      - continuation/continue:
+          configuration_path: .circleci/config-generated.yml
 
 workflows:
-  exercise3: 
+  setup:
     jobs:
-      - test-rubocop
-      - test-rspec:
-          requires:
-            - test-rubocop
+      - setup

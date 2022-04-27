@@ -1,5 +1,5 @@
 const bar = () => {
-  console.log("tam giac la tat giam");
+  console.log("ngoai cua so la con mua dang do cheo");
   return true;
 }
 

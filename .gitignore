@@ -58,3 +58,7 @@ build-iPhoneSimulator/
 node_modules
 
 .circleci/config-generated.yml
+
+slides/workshop.html
+slides/workshop.pdf
+

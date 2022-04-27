@@ -72,7 +72,7 @@ workflows:
     - Contain execution environment
 - Workflows:
     - Responsible for orchestrating multiple jobs.
-    - E.g. job A requires job A. Or, B & C can run in parrallel
+    - E.g. job A requires job B. Or, B & C can run in parrallel
 - Pipeline: Represents the entirety of your configuration
 
 ---
@@ -88,7 +88,7 @@ workflows:
 - Steps
   - checkout
   - bundle install
-  - bundle exec rspec ./spec/test1.rb
+  - bundle exec rspec ./spec/test1_spec.rb
 
 https://circleci.com/docs/2.0/configuration-reference/#run
 https://circleci.com/docs/2.0/configuration-reference/#checkout
